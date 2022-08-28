@@ -2,6 +2,7 @@
 
 rm -rf $1.comic
 rm -rf ~/.local/share/plasma/comics/$1/
+rm -r ~/.local/share/plasma_engine_comic/
 zip -r $1.comic contents/code/main.es metadata.desktop icon.png
 kpackagetool5 -t Plasma/Comic -i $1.comic
 plasmoidviewer -a org.kde.plasma.comic
