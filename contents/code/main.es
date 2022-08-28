@@ -2,29 +2,15 @@ function init() {
   comic.comicAuthor = "Um Sábado Qualquer"
   comic.websiteUrl = "https://www.umsabadoqualquer.com/"
   comic.identifier = "que-comece-a-concorrencia"
-  // comic.shopUrl = "https://www.umalojaqualquer.com/"
 
-  // comic.requestPage(comic.websiteUrl + '?s=', comic.User)
-  comic.requestPage(comic.websiteUrl + (comic.lastIdentifier || comic.identifier), comic.Page)
+  comic.requestPage(comic.websiteUrl + '?s=', comic.User)
 }
 
 function pageRetrieved(id, html) {
   if (id == comic.User) {
-    var identifiers = findIdentifiersOfComicPage(html)
+    comic.identifier = findLastComicIdentifier(html) || comic.identifier
 
-    for (id of identifiers) {
-      print("*** id: " + id)
-
-      try {
-        print("*** comic.websiteUrl" + comic.websiteUrl + id)
-        comic.requestPage(comic.websiteUrl + id, comic.Page)
-        comic.lastIdentifier = id
-        break
-      } catch(_) {
-        comic.requestPage(comic.websiteUrl + comic.firstIdentifier, comic.Page)
-        break
-      }
-    }
+    comic.requestPage(comic.websiteUrl + comic.identifier, comic.Page)
   }
 
   if (id == comic.Page) {
@@ -32,23 +18,14 @@ function pageRetrieved(id, html) {
   }
 }
 
-function findIdentifiersOfComicPage(html) {
-  var regexOfAllLinkTitles = /a\shref=https:\/\/www\.umsabadoqualquer\.com\/([\w\-]+)\/\sclass=link/gm
+function findLastComicIdentifier(html) {
+  var regexOfAllLinkTitles = /(<\/script>\s<\/div>).+?(a\shref=https:\/\/www\.umsabadoqualquer\.com\/([\w\-]+)\/\sclass=link)/
   var match = html.match(regexOfAllLinkTitles)
 
-  if (!(match && match.length > 0)) {
-    return
+  if (match && match.length > 2) {
+    print("identifier: " + match[3])
+    return match[3]
   }
-
-  var identifiers = []
-
-  for (link of match) {
-    var regexToGetIdentifier = /\.com\/([\w\-]+)\//
-    if (match) {
-      identifiers.push(regexToGetIdentifier.exec(link)[1])
-    }
-  }
-  return identifiers
 }
 
 function getAndSetComicInfo(html) {
