@@ -1,5 +1,5 @@
 function init() {
-  comic.comicAuthor = "Um Sábado Qualquer"
+  comic.comicAuthor = "Carlos Ruas"
   comic.websiteUrl = "https://www.umsabadoqualquer.com/"
 
   if (comic.identifier) {
