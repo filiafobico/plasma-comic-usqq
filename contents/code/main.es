@@ -1,16 +1,18 @@
 function init() {
   comic.comicAuthor = "Um Sábado Qualquer"
   comic.websiteUrl = "https://www.umsabadoqualquer.com/"
-  comic.identifier = "que-comece-a-concorrencia"
 
-  comic.requestPage(comic.websiteUrl + '?s=', comic.User)
+  if (comic.identifier) {
+    comic.requestPage(comic.websiteUrl + comic.identifier, comic.Page)
+  } else {
+    comic.requestPage(comic.websiteUrl + "?s=", comic.User)
+  }
 }
 
 function pageRetrieved(id, html) {
   if (id == comic.User) {
-    comic.identifier = findLastComicIdentifier(html) || comic.identifier
-
-    comic.requestPage(comic.websiteUrl + comic.identifier, comic.Page)
+    comic.lastIdentifier = findLastComicIdentifier(html)
+    comic.requestPage(comic.websiteUrl + comic.lastIdentifier, comic.Page)
   }
 
   if (id == comic.Page) {
