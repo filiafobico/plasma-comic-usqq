@@ -23,7 +23,6 @@ function findLastComicIdentifier(html) {
   var match = html.match(regexOfAllLinkTitles)
 
   if (match && match.length > 2) {
-    print("identifier: " + match[3])
     return match[3]
   }
 }
@@ -42,13 +41,8 @@ function getAndSetComicInfo(html) {
   comic.requestPage(comic.shopUrl, comic.Image)
 
   comic.title = comic.identifier.replace(/-/g, " ")
-  print("Strip title: " + comic.title)
-
   comic.previousIdentifier = findPrevComicIdentifier(html)
-  print("Previous identifier: " + comic.previousIdentifier)
-
   comic.nextIdentifier = findNextComicIdentifier(html)
-  print("Next identifier: " + comic.nextIdentifier)
 
 }
 
@@ -73,7 +67,6 @@ function findPrevComicIdentifier(html) {
 }
 
 function findComicImage(html) {
-  print("findComicImage")
   var regexOfComicImage =
     /https:\/\/www\.umsabadoqualquer\.com\/wp-content\/uploads\/\d{4}\/\d{2}\/\d+\.png/
   var match = regexOfComicImage.exec(html)
