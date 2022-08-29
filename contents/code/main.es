@@ -34,17 +34,18 @@ function getAndSetComicInfo(html) {
   if (!shopUrl) return false
 
   var previousIdentifier = findPrevComicIdentifier(html)
-  if (!previousIdentifier) return false
+  if (previousIdentifier) {
+    comic.previousIdentifier = previousIdentifier
+  }
 
   var nextIdentifier = findNextComicIdentifier(html)
-  if (!nextIdentifier) return false
+  if (nextIdentifier) {
+    comic.nextIdentifier = nextIdentifier
+  }
 
   comic.shopUrl = shopUrl
   comic.requestPage(comic.shopUrl, comic.Image)
-
   comic.title = comic.identifier.replace(/[^\w\d]/g, ' ').replace(/\b(\w)/g, (letter) => letter.toUpperCase())
-  comic.previousIdentifier = previousIdentifier
-  comic.nextIdentifier = nextIdentifier
 }
 
 function findNextComicIdentifier(html) {
