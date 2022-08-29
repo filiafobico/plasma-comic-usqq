@@ -43,8 +43,8 @@ function getAndSetComicInfo(html) {
   comic.requestPage(comic.shopUrl, comic.Image)
 
   comic.title = comic.identifier.replace(/[^\w\d]/g, ' ').replace(/\b(\w)/g, (letter) => letter.toUpperCase())
-  comic.previousIdentifier = findPrevComicIdentifier(html)
-  comic.nextIdentifier = findNextComicIdentifier(html)
+  comic.previousIdentifier = previousIdentifier
+  comic.nextIdentifier = nextIdentifier
 }
 
 function findNextComicIdentifier(html) {
