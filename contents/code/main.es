@@ -21,11 +21,11 @@ function pageRetrieved(id, html) {
 }
 
 function findLastComicIdentifier(html) {
-  var regexOfAllLinkTitles = /(<\/script>\s<\/div>).+?(a\shref=https:\/\/www\.umsabadoqualquer\.com\/([\w\-]+)\/\sclass=link)/
+  var regexOfAllLinkTitles = /href=https:\/\/www\.umsabadoqualquer\.com\/([\w-]+)\/ class/
   var match = html.match(regexOfAllLinkTitles)
 
-  if (match && match.length > 2) {
-    return match[3]
+  if (match && match.length) {
+    return match[1]
   }
 }
 
@@ -68,9 +68,9 @@ function findPrevComicIdentifier(html) {
   }
 }
 
-function findComicImage(html) {
+function findComicImage(html) { 
   var regexOfComicImage =
-    /https:\/\/www\.umsabadoqualquer\.com\/wp-content\/uploads\/\d{4}\/\d{2}\/\d+\.png/
+    /https:\/\/www\.umsabadoqualquer\.com\/wp-content\/uploads\/[\d\w\-\\\/]+\.png/
   var match = regexOfComicImage.exec(html)
 
   if (match && match.length) {
